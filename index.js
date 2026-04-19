@@ -114,3 +114,112 @@ function gameObject() {
         },
     };
 }
+
+// HELPERS
+function getAllPlayers(game) {
+    const allPlayers = {};
+
+    for (let player in game.home.players) {
+        allPlayers[player] = game.home.players[player];
+    }
+
+    for (let player in game.away.players) {
+        allPlayers[player] = game.away.players[player];
+    }
+
+    return allPlayers;
+}
+
+// NUMBER POINTS SCORED
+function numPointsScored(playerName) {
+    const game = gameObject()
+    const players = getAllPlayers(game)
+
+    for (let name in players) {
+        if (name === playerName) {
+            return players[name].points
+        }
+    }
+}
+
+// SHOE SIZE
+function shoeSize(playerName) {
+    const game = gameObject()
+    const players = getAllPlayers(game)
+
+    for (let name in players) {
+        if (name === playerName) {
+            return players[name].shoe
+        }
+    }
+}
+
+// TEAM COLORS
+function teamColors(teamName) {
+    const game = gameObject()
+
+    if (game.home.teamName === teamName) return game.home.colors
+    if (game.away.teamName === teamName) return game.away.colors
+} 
+
+// TEAM NAME
+function teamNames() {
+    const game = gameObject()
+    return [game.home.teamName, game.away.teamName]
+}
+
+// PLAYER NUMBERS
+function playerNumbers(teamName) {
+    const game = gameObject()
+
+    let team;
+
+    if (game.home.teamName === teamName) team = game.home.players
+    if (game.away.teamName === teamName) team = game.away.players
+
+    const numbers = []
+
+    for (let player in team) {
+        numbers.push(team[player].number)
+    }
+    return numbers
+}
+
+// PLAYER STATS
+function playerStats(playerName) {
+    const game = gameObject()
+    const players = getAllPlayers(game)
+
+    for (let name in players) {
+        if (name === playerName) {
+            return players[name]
+        }
+    }
+}
+
+// BIG SHOE REBOUNDS
+function bigShoeRebounds() {
+    const game = gameObject()
+    const players = getAllPlayers(game)
+
+    let biggestShoe = 0
+    let rebounds = 0
+
+    for (let name in players) {
+        if (players[name].shoe > biggestShoe) {
+            biggestShoe = players[name].shoe
+            rebounds = players[name].rebounds
+        }
+    }
+    return rebounds
+}
+
+module.exports = {
+    numPointScored,
+    shoeSize,
+    teamColors,
+    teamNames,
+    playerNumbers,
+    playerStats,
+    bigShoeRebounds
+}
